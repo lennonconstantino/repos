@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa'
 import { Container, Form, SubmitButton, List, DeleteButton } from "./styles";
 
@@ -8,21 +8,49 @@ export default function Main() {
     const [newRepo, setNewRepo] = useState('');
     const [repositorios, setRepositorios] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState(null);
+
+    // Did mount - buscar
+    useEffect(() => {
+        const repoStorage = localStorage.getItem('repos');
+        if (repoStorage) {
+            console.log("recuperando...")
+            setRepositorios(JSON.parse(repoStorage));
+        }
+    }, []);
+
+    // Did update - salvar alteracoes
+    useEffect(() => {
+        console.log("Salvando...")
+        localStorage.setItem('repos', JSON.stringify(repositorios));
+    }, [repositorios]);
 
     const handleSubmit = useCallback((e)=>{       
         e.preventDefault(); // nao atualiza a pagina 
 
         async function submit() {
             setLoading(true);
+            setAlert(null);
             try {
+                if (newRepo === '') {
+                    throw new Error('Voce precisa indicar um repositorio!');
+                }
+
                 const response = await api.get(`repos/${newRepo}`);
-                console.log(response.data);
+
+                const hasRepo = repositorios.find(repo => repo.name === newRepo);
+                if (hasRepo) {
+                    throw new Error('Repositorio duplicado!');
+                }
+                //console.log(response.data);
+
                 const data = {
                     name: response.data.full_name,
                 }
                 setRepositorios([...repositorios, data]);
                 setNewRepo('');
             } catch(error) {
+                setAlert(true);
                 console.log(error);
             } finally {
                 setLoading(false);
@@ -34,6 +62,7 @@ export default function Main() {
 
     function handleInputChange(e){
         setNewRepo(e.target.value);
+        setAlert(null); // quando o usuario comecar a digitar o repo, vai desmarcar a cor que sinaliza error
     }
 
     const handleDelete = useCallback((repo)=> {
@@ -48,7 +77,7 @@ export default function Main() {
                 Meus repositorios
             </h1>
 
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} error={alert}>
                 <input 
                     type="text" 
                     placeholder="Adicionar Repositorios"
