@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa'
 import { Container, Form, SubmitButton, List, DeleteButton } from "./styles";
+import {Link} from 'react-router-dom'
 
 import api from '../../services/api';
 
@@ -13,8 +14,10 @@ export default function Main() {
     // Did mount - buscar
     useEffect(() => {
         const repoStorage = localStorage.getItem('repos');
+        console.log(repoStorage);
         if (repoStorage) {
             console.log("recuperando...")
+            console.log(JSON.parse(repoStorage));
             setRepositorios(JSON.parse(repoStorage));
         }
     }, []);
@@ -101,9 +104,9 @@ export default function Main() {
                             </DeleteButton>
                             {repo.name}
                         </span>
-                        <a href="">
+                        <Link to={`/repositorio/${encodeURIComponent(repo.name)}`}>
                             <FaBars size={20}/>
-                        </a>
+                        </Link>
                     </li>
                 ))}
             </List>
