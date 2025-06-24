@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import { FaGithub, FaPlus } from 'react-icons/fa'
 import { Container, Form, SubmitButton } from "./styles";
 
@@ -8,18 +8,19 @@ export default function Main() {
     const [newRepo, setNewRepo] = useState('');
     const [repositorios, setRepositorios] = useState([]);
 
-    async function handleSubmit(e){
-        e.preventDefault(); // refresh pages
-        
-
-        const response = await api.get(`repos/${newRepo}`);
-        console.log(response.data);
-        const data = {
-            name: response.data.full_name,
+    const handleSubmit = useCallback((e)=>{       
+        e.preventDefault(); // nao atualiza a pagina 
+        async function submit() {
+            const response = await api.get(`repos/${newRepo}`);
+            console.log(response.data);
+            const data = {
+                name: response.data.full_name,
+            }
+            setRepositorios([...repositorios, data]);
+            setNewRepo('');
         }
-        setRepositorios([...repositorios, data]);
-        setNewRepo('');
-    }
+        submit();
+    }, [newRepo, repositorios]);
 
     function handleInputChange(e){
         setNewRepo(e.target.value);
