@@ -1,8 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import { FaGithub, FaPlus } from 'react-icons/fa'
 import { Container, Form, SubmitButton } from "./styles";
 
+import api from '../../services/api';
+
 export default function Main() {
+    const [newRepo, setNewRepo] = useState('');
+    const [repositorios, setRepositorios] = useState([]);
+
+    async function handleSubmit(e){
+        e.preventDefault(); // refresh pages
+        
+
+        const response = await api.get(`repos/${newRepo}`);
+        console.log(response.data);
+        const data = {
+            name: response.data.full_name,
+        }
+        setRepositorios([...repositorios, data]);
+        setNewRepo('');
+    }
+
+    function handleInputChange(e){
+        setNewRepo(e.target.value);
+    }
+
     return (
         <Container>
             <h1>
@@ -10,8 +32,13 @@ export default function Main() {
                 Meus repositorios
             </h1>
 
-            <Form onSubmit={()=>{}}>
-                <input type="text" placeholder="Adicionar Repositorios"/>
+            <Form onSubmit={handleSubmit}>
+                <input 
+                    type="text" 
+                    placeholder="Adicionar Repositorios"
+                    value={newRepo}
+                    onChange={handleInputChange}
+                />
                 <SubmitButton>
                     <FaPlus color="#FFF" size={14} />
                 </SubmitButton>
