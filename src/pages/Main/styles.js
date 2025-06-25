@@ -87,6 +87,7 @@ li {
 
     a {
         color: #0D2636;
+        //pointer-events: none;
         text-decoration: none;
     }
 }

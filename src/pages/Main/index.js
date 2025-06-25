@@ -10,23 +10,26 @@ export default function Main() {
     const [repositorios, setRepositorios] = useState([]);
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false); // Nova flag
 
     // Did mount - buscar
     useEffect(() => {
-        const repoStorage = localStorage.getItem('repos');
-        console.log(repoStorage);
+        const repoStorage = JSON.parse(localStorage.getItem('repos'));
+        console.log("Carregando:", repoStorage);
         if (repoStorage) {
-            console.log("recuperando...")
-            console.log(JSON.parse(repoStorage));
-            setRepositorios(JSON.parse(repoStorage));
+            console.log("Recuperando...");
+            setRepositorios(repoStorage);
         }
+        setIsLoaded(true); // Marca como carregado
     }, []);
 
     // Did update - salvar alteracoes
     useEffect(() => {
-        console.log("Salvando...")
-        localStorage.setItem('repos', JSON.stringify(repositorios));
-    }, [repositorios]);
+        if (isLoaded) { // Só salva depois de carregar
+            console.log("Salvando...");
+            localStorage.setItem('repos', JSON.stringify(repositorios));
+        }
+    }, [repositorios, isLoaded]);
 
     const handleSubmit = useCallback((e)=>{       
         e.preventDefault(); // nao atualiza a pagina 
