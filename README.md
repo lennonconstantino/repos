@@ -1,70 +1,156 @@
-# Getting Started with Create React App
+# GitHub Repositories Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React application that allows you to manage and explore GitHub repositories. Built with modern React hooks, React Router DOM v6, and styled-components.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **Repository Management**: Add and remove GitHub repositories from your list
+- **Repository Details**: View detailed information about each repository
+- **Issues Tracking**: Browse and filter issues for each repository
+- **Responsive Design**: Modern UI with styled-components
+- **Local Storage**: Persist your repository list locally
+- **GitHub API Integration**: Real-time data from GitHub's public API
 
-### `npm start`
+## 🛠️ Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React 19.1.0** - Modern React with hooks
+- **React Router DOM 6.30.1** - Client-side routing
+- **Styled Components 6.1.19** - CSS-in-JS styling
+- **Axios 1.10.0** - HTTP client for API requests
+- **React Icons 5.5.0** - Icon library
+- **Create React App** - Development environment
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📋 Prerequisites
 
-### `npm test`
+Before running this application, make sure you have:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Node.js** (version 14 or higher)
+- **npm** (comes with Node.js)
 
-### `npm run build`
+## 🔧 Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd repos
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-### `npm run eject`
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📁 Project Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+src/
+├── App.js                 # Main application component
+├── index.js              # Application entry point
+├── routes.js             # React Router configuration
+├── pages/
+│   ├── Main/
+│   │   ├── index.js      # Main page component
+│   │   └── styles.js     # Main page styles
+│   └── Repositorio/
+│       ├── index.js      # Repository details component
+│       └── styles.js     # Repository page styles
+├── services/
+│   └── api.js           # GitHub API configuration
+└── styles/
+    └── global.js        # Global styles
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🎯 Usage
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Adding a Repository
+1. On the main page, enter a repository name in the format: `owner/repository-name`
+2. Click the "+" button or press Enter
+3. The repository will be added to your list and saved locally
 
-## Learn More
+### Viewing Repository Details
+1. Click on the repository name or the bars icon in your repository list
+2. View repository information including:
+   - Repository name and description
+   - Owner avatar and details
+   - List of issues with filtering options
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Managing Issues
+- **Filter Issues**: Use the filter buttons to view "All", "Open", or "Closed" issues
+- **Pagination**: Navigate through issues using the "Previous" and "Next" buttons
+- **Issue Details**: Click on issue titles to view them on GitHub
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Removing Repositories
+- Click the trash icon next to any repository in your list to remove it
 
-### Code Splitting
+## 🔌 API Integration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The application uses GitHub's public API to fetch repository and issue data:
 
-### Analyzing the Bundle Size
+- **Base URL**: `https://api.github.com`
+- **Endpoints**:
+  - `GET /repos/{owner}/{repo}` - Repository information
+  - `GET /repos/{owner}/{repo}/issues` - Repository issues
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🚀 Available Scripts
 
-### Making a Progressive Web App
+- `npm start` - Runs the app in development mode
+- `npm run build` - Builds the app for production
+- `npm test` - Launches the test runner
+- `npm run eject` - Ejects from Create React App (one-way operation)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🎨 Styling
 
-### Advanced Configuration
+The application uses **styled-components** for styling with:
+- Modern, clean design
+- Responsive layout
+- Consistent color scheme
+- Smooth animations and transitions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 💾 Data Persistence
 
-### Deployment
+Your repository list is automatically saved to localStorage and will persist between browser sessions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🔧 Development
 
-### `npm run build` fails to minify
+### Recent Updates
+- **React Router DOM v6**: Updated from v5 for React 19 compatibility
+- **Modern React Patterns**: Uses hooks and functional components
+- **Improved Error Handling**: Better user feedback for API errors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Troubleshooting
+
+If you encounter routing issues:
+1. Ensure you're using React Router DOM v6
+2. Check that all route components are properly imported
+3. Verify that the `useParams` hook is used correctly in dynamic routes
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📞 Support
+
+If you have any questions or issues, please:
+1. Check the existing issues in the repository
+2. Create a new issue with detailed information
+3. Include steps to reproduce the problem
+
+---
+
+**Happy coding! 🎉**
